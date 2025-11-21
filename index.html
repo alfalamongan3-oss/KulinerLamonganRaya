@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kuliner Lamongan Raya</title>
+    
+    <!-- Font Mewah -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- STYLE ELEGAN --- */
+        :root {
+            --primary: #0f766e; /* Warna Utama: Deep Teal */
+            --primary-dark: #115e59;
+            --gold: #d97706;    /* Warna Aksen: Gold */
+            --bg: #f1f5f9;
+            --text: #1e293b;
+            --white: #ffffff;
+            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-hover: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; outline: none; font-family: 'Poppins', sans-serif; }
+
+        body { background-color: var(--bg); color: var(--text); overflow-x: hidden; }
+        .hidden { display: none !important; }
+        
+        /* Button Style */
+        .btn {
+            padding: 12px 24px; border: none; border-radius: 8px;
+            font-weight: 600; cursor: pointer; transition: all 0.3s ease;
+            width: 100%; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.5px;
+        }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+        .btn:active { transform: translateY(0); }
+        
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-primary:hover { background: var(--primary-dark); }
+        
+        .btn-gold { background: var(--gold); color: white; }
+        .btn-gold:hover { background: #b45309; }
+        
+        .btn-outline { background: transparent; border: 1px solid var(--primary); color: var(--primary); }
+        .btn-outline:hover { background: var(--primary); color: white; }
+        
+        .btn-danger { background: #ef4444; color: white; width: auto; padding: 6px 12px; font-size: 0.8rem; }
+        .btn-sm { width: auto; padding: 6px 16px; font-size: 0.85rem; display: inline-block;}
+
+        /* Form Style */
+        input, select, textarea {
+            width: 100%; padding: 14px; margin: 8px 0 20px;
+            border: 1px solid #e2e8f0; border-radius: 8px;
+            font-family: inherit; background: white; transition: 0.3s;
+        }
+        input:focus, select:focus, textarea:focus {
+            border-color: var(--primary); box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.1);
+        }
+        label { font-size: 0.85rem; font-weight: 600; color: #64748b; display: block; margin-bottom: 4px; }
+
+        /* File Upload Cantik */
+        .file-upload-wrapper {
+            border: 2px dashed #cbd5e1; padding: 20px; text-align: center;
+            border-radius: 8px; cursor: pointer; background: white; transition: 0.3s;
+            display: flex; flex-direction: column; align-items: center;
+        }
+        .file-upload-wrapper:hover { border-color: var(--primary); background: #f0fdfa; }
+        .file-icon { font-size: 2rem; color: #94a3b8; margin-bottom: 10px; }
+
+        /* Layout */
+        .container { max-width: 1000px; margin: 0 auto; padding: 40px 20px; }
+        .card {
+            background: var(--white); border-radius: 16px; padding: 40px;
+            box-shadow: var(--shadow); margin-bottom: 30px;
+            border-top: 5px solid var(--primary); transition: 0.3s;
+        }
+        .card:hover { box-shadow: var(--shadow-hover); }
+
+        /* HERO SECTION */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(15, 118, 110, 0.85), rgba(15, 118, 110, 0.7)), 
+                        url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=1920');
+            background-size: cover; background-position: center;
+            display: flex; flex-direction: column; align-items: center; 
+            justify-content: center; text-align: center; color: white;
+        }
+        .hero h1 { font-family: 'Playfair Display', serif; font-size: 3.5rem; margin-bottom: 15px; letter-spacing: 1px; text-shadow: 0 4px 6px rgba(0,0,0,0.3); }
+        .hero p { font-size: 1.2rem; font-weight: 300; margin-bottom: 40px; opacity: 0.9; }
+        
+        .option-box {
+            background: rgba(255,255,255,0.1); backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.3); padding: 20px 40px;
+            margin: 10px; border-radius: 12px; cursor: pointer; transition: 0.3s;
+            font-weight: 600; letter-spacing: 1px; display: inline-block;
+        }
+        .option-box:hover { background: white; color: var(--primary); transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
+
+        /* FOOD GRID */
+        .food-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 30px; }
+        .food-card {
+            background: white; border-radius: 12px; overflow: hidden;
+            box-shadow: var(--shadow); transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex; flex-direction: column;
+        }
+        .food-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-hover); }
+        
+        .food-img { height: 200px; background-color: #e2e8f0; background-size: cover; background-position: center; }
+        .food-body { padding: 25px; flex-grow: 1; display: flex; flex-direction: column; }
+        .food-cat { font-size: 0.75rem; font-weight: 700; color: var(--gold); letter-spacing: 1px; text-transform: uppercase; }
+        .food-title { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--primary-dark); margin: 5px 0 10px; }
+        .food-desc { font-size: 0.9rem; color: #64748b; line-height: 1.6; margin-bottom: 20px; }
+        
+        .seller-info { margin-top: auto; padding-top: 15px; border-top: 1px solid #f1f5f9; font-size: 0.85rem; color: #475569; }
+        .addr-text { display: block; font-size: 0.8rem; color: #94a3b8; margin-top: 2px; }
+    </style>
+</head>
+<body>
+
+    <!-- TOAST NOTIFICATION (PENGGANTI ALERT) -->
+    <div id="toast" style="visibility: hidden; min-width: 250px; background: #333; color: #fff; text-align: center; border-radius: 4px; padding: 16px; position: fixed; z-index: 9999; left: 50%; bottom: 30px; transform: translateX(-50%); box-shadow: 0 5px 15px rgba(0,0,0,0.3);"></div>
+
+    <!-- 1. HERO PAGE -->
+    <section id="landing-page" class="hero">
+        <h1>KULINER LAMONGAN RAYA</h1>
+        <p>Cita Rasa Legendaris. Eksklusif & Otentik.</p>
+        <div>
+            <div onclick="app.nav('buyer')" class="option-box">Masuk Sebagai Pembeli</div>
+            <div onclick="app.nav('auth')" class="option-box">Masuk Sebagai Penjual</div>
+        </div>
+    </section>
+
+    <!-- 2. AUTH PAGE -->
+    <section id="auth-page" class="container hidden">
+        <div style="max-width: 450px; margin: 0 auto;">
+            <div class="card">
+                <h2 style="text-align:center; margin-bottom:30px; color:var(--primary); font-family:'Playfair Display';">Portal Penjual</h2>
+                
+                <!-- LOGIN -->
+                <form id="login-form">
+                    <label>Username</label><input type="text" id="log-user" required placeholder="Username Anda">
+                    <label>Password</label><input type="password" id="log-pass" required placeholder="******">
+                    <button type="submit" class="btn btn-primary">MASUK DASHBOARD</button>
+                    <p style="text-align:center; margin-top:20px; font-size:0.9rem;">
+                        Belum punya akun? <span style="color:var(--gold); cursor:pointer; font-weight:bold;" onclick="app.toggleAuth()">Daftar Disini</span>
+                    </p>
+                </form>
+
+                <!-- REGISTER -->
+                <form id="register-form" class="hidden">
+                    <label>Username Baru</label><input type="text" id="reg-user" required>
+                    <label>Password</label><input type="password" id="reg-pass" required>
+                    <label>No. WhatsApp (628xxxxx)</label><input type="number" id="reg-wa" required>
+                    <label>Alamat Warung</label><textarea id="reg-addr" rows="2" required placeholder="Contoh: Jl. Basuki Rahmat No. 5..."></textarea>
+                    
+                    <button type="submit" class="btn btn-gold">DAFTAR SEKARANG</button>
+                    <p style="text-align:center; margin-top:20px; font-size:0.9rem;">
+                        Sudah punya akun? <span style="color:var(--gold); cursor:pointer; font-weight:bold;" onclick="app.toggleAuth()">Login Disini</span>
+                    </p>
+                </form>
+            </div>
+            <button class="btn btn-outline" onclick="app.nav('landing')">Kembali ke Depan</button>
+        </div>
+    </section>
+
+    <!-- 3. SELLER DASHBOARD -->
+    <section id="seller-dashboard" class="container hidden">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:30px;">
+            <div>
+                <h2 style="font-family:'Playfair Display'; color:var(--primary);">Dashboard Penjual</h2>
+                <small>Halo, <span id="display-username" style="font-weight:bold; color:var(--gold);">User</span></small>
+            </div>
+            <button class="btn btn-outline btn-sm" onclick="app.logout()">Keluar</button>
+        </div>
+
+        <div class="card">
+            <h3 id="form-title" style="color:var(--primary); margin-bottom:20px; border-bottom:2px solid #f1f5f9; padding-bottom:10px;">TAMBAH MENU BARU</h3>
+            <form id="food-form">
+                <input type="hidden" id="food-id">
+                
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:20px;">
+                    <div><label>Nama Makanan</label><input type="text" id="food-name" required></div>
+                    <div>
+                        <label>Kategori</label>
+                        <select id="food-cat">
+                            <option value="Berkuah">Berkuah</option>
+                            <option value="Kering">Kering</option>
+                            <option value="Jajanan">Jajanan</option>
+                        </select>
+                    </div>
+                </div>
+
+                <label>Deskripsi Menu</label><textarea id="food-desc" rows="3" required></textarea>
+                
+                <!-- UPLOAD FOTO -->
+                <label>Foto Makanan (Max 2MB)</label>
+                <div class="file-upload-wrapper" onclick="document.getElementById('food-file').click()">
+                    <span class="file-icon">📷</span>
+                    <span id="file-name-display" style="color:#64748b; font-size:0.9rem;">Klik disini untuk upload foto</span>
+                    <input type="file" id="food-file" accept="image/*" style="display:none;" onchange="app.updateFileLabel(this)">
+                </div>
+
+                <div style="display:flex; gap:15px; margin-top:25px;">
+                    <button type="submit" id="btn-save" class="btn btn-primary">TERBITKAN MENU</button>
+                    <button type="button" id="btn-cancel" class="btn btn-outline hidden" onclick="app.resetForm()">BATAL EDIT</button>
+                </div>
+            </form>
+        </div>
+
+        <h3 style="font-family:'Playfair Display'; margin-bottom:20px;">Daftar Menu Saya</h3>
+        <div id="seller-grid" class="food-grid"></div>
+    </section>
+
+    <!-- 4. BUYER PAGE -->
+    <section id="buyer-page" class="container hidden">
+        <div style="text-align:center; margin-bottom:40px;">
+            <h2 style="font-family:'Playfair Display'; font-size:2.5rem; color:var(--primary);">Galeri Kuliner</h2>
+            <button class="btn btn-outline btn-sm" onclick="app.nav('landing')" style="margin-top:10px;">Kembali ke Beranda</button>
+        </div>
+        
+        <div style="display:flex; justify-content:center; gap:10px; margin-bottom:30px;">
+            <button onclick="app.filter('all')" class="btn btn-outline btn-sm">Semua</button>
+            <button onclick="app.filter('Berkuah')" class="btn btn-outline btn-sm">Berkuah</button>
+            <button onclick="app.filter('Kering')" class="btn btn-outline btn-sm">Kering</button>
+        </div>
+        <input type="text" id="search-box" placeholder="Cari makanan favoritmu..." onkeyup="app.renderBuyer()" style="margin-bottom:40px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+        
+        <div id="buyer-grid" class="food-grid"></div>
+    </section>
+
+    <!-- LOGIKA JAVASCRIPT -->
+    <script>
+        const API = 'api.php'; // Pastikan file api.php ada di folder yang sama
+        let state = { user: null, foods: [], filter: 'all' };
+
+        const app = {
+            // NAVIGASI
+            nav: (page) => {
+                document.querySelectorAll('section').forEach(el => el.classList.add('hidden'));
+                document.getElementById(page === 'landing' ? 'landing-page' : page === 'auth' ? 'auth-page' : page === 'seller' ? 'seller-dashboard' : 'buyer-page').classList.remove('hidden');
+                if(page === 'buyer') app.fetchFoods(true);
+                if(page === 'seller') app.fetchFoods(false);
+            },
+            toggleAuth: () => {
+                document.getElementById('login-form').classList.toggle('hidden');
+                document.getElementById('register-form').classList.toggle('hidden');
+            },
+            logout: () => { state.user = null; app.nav('landing'); },
+            
+            // HELPER
+            toast: (msg) => {
+                const t = document.getElementById("toast");
+                t.innerText = msg; t.style.visibility = "visible";
+                setTimeout(() => { t.style.visibility = "hidden"; }, 3000);
+            },
+            updateFileLabel: (input) => {
+                const display = document.getElementById('file-name-display');
+                if (input.files && input.files[0]) {
+                    display.innerText = "✅ " + input.files[0].name;
+                    display.style.color = "var(--primary)";
+                    display.style.fontWeight = "bold";
+                }
+            },
+
+            // AUTH
+            register: async (e) => {
+                e.preventDefault();
+                const data = {
+                    username: document.getElementById('reg-user').value,
+                    password: document.getElementById('reg-pass').value,
+                    whatsapp: document.getElementById('reg-wa').value,
+                    address: document.getElementById('reg-addr').value
+                };
+                try {
+                    const res = await fetch(API + '?action=register', {
+                        method: 'POST', body: JSON.stringify(data)
+                    }).then(r => r.json());
+                    app.toast(res.message);
+                    if(res.status === 'success') app.toggleAuth();
+                } catch(err) { app.toast("Gagal Koneksi ke Server"); }
+            },
+
+            login: async (e) => {
+                e.preventDefault();
+                const data = {
+                    username: document.getElementById('log-user').value,
+                    password: document.getElementById('log-pass').value
+                };
+                try {
+                    const res = await fetch(API + '?action=login', {
+                        method: 'POST', body: JSON.stringify(data)
+                    }).then(r => r.json());
+                    if(res.status === 'success') {
+                        state.user = res.username;
+                        document.getElementById('display-username').innerText = res.username;
+                        app.nav('seller');
+                    } else { app.toast(res.message); }
+                } catch(err) { app.toast("Gagal Login (Cek Database)"); }
+            },
+
+            // FOOD ACTIONS
+            saveFood: async (e) => {
+                e.preventDefault();
+                const id = document.getElementById('food-id').value;
+                const action = id ? 'edit_food' : 'add_food';
+                
+                const formData = new FormData();
+                formData.append('id', id);
+                formData.append('name', document.getElementById('food-name').value);
+                formData.append('category', document.getElementById('food-cat').value);
+                formData.append('desc', document.getElementById('food-desc').value);
+                formData.append('seller', state.user);
+                
+                const fileInput = document.getElementById('food-file');
+                if(fileInput.files[0]) formData.append('img_file', fileInput.files[0]);
+
+                if(!id && !fileInput.files[0]) return app.toast("Wajib upload foto baru!");
+
+                try {
+                    const res = await fetch(API + '?action=' + action, { method: 'POST', body: formData }).then(r => r.json());
+                    app.toast(res.message);
+                    if(res.status === 'success') { app.resetForm(); app.fetchFoods(false); }
+                } catch(err) { app.toast("Gagal Upload (File max 2MB)"); }
+            },
+
+            deleteFood: async (id) => {
+                if(!confirm("Hapus menu ini?")) return;
+                const res = await fetch(API + '?action=delete_food', {
+                    method: 'POST', body: JSON.stringify({id: id, seller: state.user})
+                }).then(r => r.json());
+                app.toast(res.message);
+                app.fetchFoods(false);
+            },
+
+            editFood: (id) => {
+                const f = state.foods.find(x => x.id == id);
+                if(f) {
+                    document.getElementById('food-id').value = f.id;
+                    document.getElementById('food-name').value = f.name;
+                    document.getElementById('food-cat').value = f.category;
+                    document.getElementById('food-desc').value = f.description;
+                    
+                    document.getElementById('form-title').innerText = "EDIT: " + f.name;
+                    document.getElementById('btn-save').innerText = "SIMPAN PERUBAHAN";
+                    document.getElementById('btn-save').classList.add('btn-gold');
+                    document.getElementById('btn-cancel').classList.remove('hidden');
+                    document.getElementById('food-file').required = false;
+                    document.getElementById('file-name-display').innerText = "Biarkan kosong jika foto tetap";
+                    document.querySelector('.card').scrollIntoView({behavior: 'smooth'});
+                }
+            },
+
+            resetForm: () => {
+                document.getElementById('food-form').reset();
+                document.getElementById('food-id').value = "";
+                document.getElementById('form-title').innerText = "TAMBAH MENU BARU";
+                document.getElementById('btn-save').innerText = "TERBITKAN MENU";
+                document.getElementById('btn-save').classList.remove('btn-gold');
+                document.getElementById('btn-cancel').classList.add('hidden');
+                document.getElementById('file-name-display').innerText = "Klik disini untuk upload foto";
+            },
+
+            fetchFoods: async (isBuyer) => {
+                try {
+                    state.foods = await fetch(API + '?action=get_foods').then(r => r.json());
+                    isBuyer ? app.renderBuyer() : app.renderSeller();
+                } catch (e) { console.log("Error Fetch"); }
+            },
+
+            renderSeller: () => {
+                const container = document.getElementById('seller-grid');
+                container.innerHTML = '';
+                const myFoods = state.foods.filter(f => f.seller === state.user);
+                if(myFoods.length === 0) container.innerHTML = "<p>Belum ada menu.</p>";
+                
+                myFoods.forEach(f => {
+                    container.innerHTML += `
+                    <div class="food-card">
+                        <div class="food-img" style="background-image: url('${f.img}')"></div>
+                        <div class="food-body">
+                            <h4 class="food-title">${f.name}</h4>
+                            <p style="font-size:0.8rem; color:#64748b">${f.category}</p>
+                            <div style="margin-top:15px; display:flex; gap:10px;">
+                                <button class="btn-outline btn-sm" onclick="app.editFood(${f.id})">Edit</button>
+                                <button class="btn-danger btn-sm" onclick="app.deleteFood(${f.id})">Hapus</button>
+                            </div>
+                        </div>
+                    </div>`;
+                });
+            },
+
+            renderBuyer: () => {
+                const container = document.getElementById('buyer-grid');
+                container.innerHTML = '';
+                const search = document.getElementById('search-box').value.toLowerCase();
+                const filtered = state.foods.filter(f => {
+                    return (state.filter === 'all' || f.category === state.filter) &&
+                           (f.name.toLowerCase().includes(search) || f.seller.toLowerCase().includes(search));
+                });
+
+                if(filtered.length === 0) container.innerHTML = "<p style='grid-column:1/-1; text-align:center'>Menu tidak ditemukan.</p>";
+
+                filtered.forEach(f => {
+                    const waLink = `https://wa.me/${f.whatsapp_number}?text=Halo, saya ingin pesan ${f.name}`;
+                    container.innerHTML += `
+                    <div class="food-card">
+                        <div class="food-img" style="background-image: url('${f.img}')"></div>
+                        <div class="food-body">
+                            <span class="food-cat">${f.category}</span>
+                            <h3 class="food-title">${f.name}</h3>
+                            <p class="food-desc">${f.description}</p>
+                            <div class="seller-info">
+                                <b>🏪 ${f.seller}</b>
+                                <span class="addr-text">📍 ${f.address}</span>
+                            </div>
+                            <a href="${waLink}" target="_blank" class="btn btn-primary" style="text-decoration:none; text-align:center; margin-top:15px;">PESAN SEKARANG</a>
+                        </div>
+                    </div>`;
+                });
+            },
+            filter: (c) => { state.filter = c; app.renderBuyer(); }
+        };
+
+        // EVENT LISTENERS (WAJIB ADA)
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('login-form').addEventListener('submit', app.login);
+            document.getElementById('register-form').addEventListener('submit', app.register);
+            document.getElementById('food-form').addEventListener('submit', app.saveFood);
+        });
+    </script>
+</body>
+</html>
